@@ -11,7 +11,10 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
 db.on("error", () => {
@@ -34,6 +37,27 @@ app.get("/", (req, res) => {
     .catch((error) => console.log(error));
 });
 
+app.get("/restaurants/new", (req, res) => {
+  res.render("new");
+});
+
+app.post("/restaurants", (req, res) => {
+  const name = req.body.name;
+  const name_en = req.body.name_en;
+  const phone = req.body.phone;
+  const category = req.body.category;
+  const location = req.body.location;
+  const description = req.body.description;
+  console.log(req.body);
+  return ResList.create({
+    name,
+    name_en,
+    phone,
+    category,
+    location,
+    description,
+  });
+});
 // detail
 app.get("/restaurants/:id", (req, res) => {
   const id = req.params.id;
@@ -62,6 +86,8 @@ app.post("/restaurants/:id/edit", (req, res) => {
       restaurant.phone = edit.phone;
       restaurant.location = edit.location;
       restaurant.category = edit.category;
+      restaurant.image = edit.image;
+      restaurant.rating = edit.rating;
       restaurant.description = edit.description;
       return restaurant.save();
     })
@@ -76,10 +102,6 @@ app.post("/restaurants/:id/delete", (req, res) => {
     .then((restaurant) => restaurant.remove())
     .then(() => res.redirect("/"))
     .catch((error) => console.log(error));
-});
-
-app.get("/restaurants/new", (req, res) => {
-  res.render("new");
 });
 
 app.listen(port, () => {
