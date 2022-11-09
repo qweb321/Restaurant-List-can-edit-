@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ResListSchema = new Schema({
   id: {
-    type: String,
+    type: Number,
   },
   name: {
     type: String,
@@ -30,7 +30,7 @@ const ResListSchema = new Schema({
     type: String,
   },
   rating: {
-    type: String,
+    type: Number,
   },
   description: {
     type: String,
