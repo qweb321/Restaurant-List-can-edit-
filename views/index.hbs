@@ -58,7 +58,15 @@
             <div class="d-flex justify-content-end align-items-center">
               <a href="/restaurants/{{this._id}}/edit" class="me-2">Edit</a>
               <a href="/restaurants/{{this._id}}" class="me-2">Detail</a>
-              <button class="btn btn-outline-primary">Delete</button>
+              <form
+                action="/restaurants/{{this._id}}/delete"
+                method="POST"
+                class="mt-3"
+              >
+                <button
+                  class="btn btn-outline-primary align-items-center"
+                >Delete</button>
+              </form>
             </div>
           </div>
         {{/each}}
