@@ -27,10 +27,15 @@ app.set("view engine", "hbs");
 app.get("/", (req, res) => {
   ResList.find()
     .lean()
-    .then((restList) => {
-      console.log(restList);
-      return res.render("index", { restList });
-    })
+    .then((restList) => res.render("index", { restList }))
+    .catch((error) => console.log(error));
+});
+
+app.get("/restaurants/:id", (req, res) => {
+  const id = req.params.id;
+  return ResList.findById(id)
+    .lean()
+    .then((restaurant) => res.render("detail", { restaurant }))
     .catch((error) => console.log(error));
 });
 
