@@ -1,6 +1,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
+const ResList = require("./model/res-list");
 const port = 3000;
 const app = express();
 
@@ -24,7 +25,13 @@ app.engine("hbs", exphbs.engine({ defaultLayout: "main", extname: "hbs" }));
 app.set("view engine", "hbs");
 
 app.get("/", (req, res) => {
-  res.render("index");
+  ResList.find()
+    .lean()
+    .then((restList) => {
+      console.log(restList);
+      return res.render("index", { restList });
+    })
+    .catch((error) => console.log(error));
 });
 
 app.listen(port, () => {
