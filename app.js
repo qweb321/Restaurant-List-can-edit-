@@ -29,6 +29,8 @@ db.once("open", () => {
 app.engine("hbs", exphbs.engine({ defaultLayout: "main", extname: "hbs" }));
 app.set("view engine", "hbs");
 
+// 宣告express使用靜態css文件
+app.use(express.static("./public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
