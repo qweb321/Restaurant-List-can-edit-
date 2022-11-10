@@ -3,6 +3,7 @@ const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const ResList = require("./model/res-list");
+const resList = require("./model/res-list");
 const port = 3000;
 const app = express();
 
@@ -36,6 +37,25 @@ app.get("/", (req, res) => {
     .then((restList) => res.render("index", { restList }))
     .catch((error) => console.log(error));
 });
+
+app.get('/search', (req, res) => {
+  const keyword = req.query.keyword.trim().toLowerCase()
+  ResList.find()
+    .lean()
+    .then((restList) => {
+      const searchList = restList.filter((rest) => { 
+        return rest.name.toLowerCase().includes(keyword) || 
+          rest.name_en.toLowerCase().includes(keyword) ||
+          rest.category.toLowerCase().includes(keyword)
+      })
+
+      if(!searchList.length) {
+        return res.render('cannot_found', { keyword })
+      }
+      res.render('index', { restList: searchList, keyword})
+    })
+    .catch(error => console.log(error))
+})
 
 app.get("/restaurants/new", (req, res) => {
   res.render("new");
