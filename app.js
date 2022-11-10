@@ -3,7 +3,7 @@ const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const ResList = require("./model/res-list");
-const resList = require("./model/res-list");
+
 const port = 3000;
 const app = express();
 
