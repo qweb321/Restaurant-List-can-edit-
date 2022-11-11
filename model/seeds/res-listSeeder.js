@@ -1,18 +1,8 @@
-const mongoose = require("mongoose");
+const db = require('../../config/mongoose')
 const ResList = require("../res-list");
 const restaurantList = require("./restaurant.json");
 
-require("dotenv").config();
-
-mongoose.connect(process.env.MONGODB_URI);
-
-const db = mongoose.connection;
-db.on("error", () => {
-  console.log("mongodb error!");
-});
-
 db.once("open", () => {
-  console.log("mongodb connected!");
   const list = restaurantList.results;
   for (let i = 0; i < list.length; i++) {
     ResList.create({
