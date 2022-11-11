@@ -2,8 +2,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const ResList = require("./model/res-list");
-
+const router = require("./routes")
 const port = 3000;
 const app = express();
 
@@ -33,87 +32,8 @@ app.set("view engine", "hbs");
 app.use(express.static("./public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  ResList.find()
-    .lean()
-    .then((restList) => res.render("index", { restList }))
-    .catch((error) => console.log(error));
-});
+app.use(router)
 
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim().toLowerCase()
-  ResList.find()
-    .lean()
-    .then((restList) => {
-      const searchList = restList.filter((rest) => { 
-        return rest.name.toLowerCase().includes(keyword) || 
-          rest.name_en.toLowerCase().includes(keyword) ||
-          rest.category.toLowerCase().includes(keyword)
-      })
-
-      if(!searchList.length) {
-        return res.render("cannot_found", { keyword })
-      }
-      res.render("index", { restList: searchList, keyword})
-    })
-    .catch(error => console.log(error))
-})
-
-app.get("/restaurants/new", (req, res) => {
-  res.render("new");
-});
-
-app.post("/restaurants", (req, res) => {
-  const new_data = req.body
-  return ResList.create({...new_data})
-    .then(() => res.redirect("/"))
-    .catch(error => console.log(error))
-});
-// detail
-app.get("/restaurants/:id", (req, res) => {
-  const id = req.params.id;
-  return ResList.findById(id)
-    .lean()
-    .then((restaurant) => res.render("detail", { restaurant }))
-    .catch((error) => console.log(error));
-});
-
-// edit
-app.get("/restaurants/:id/edit", (req, res) => {
-  const id = req.params.id;
-  return ResList.findById(id)
-    .lean()
-    .then((restaurant) => res.render("edit", { restaurant }))
-    .catch((error) => console.log(error));
-});
-
-app.post("/restaurants/:id/edit", (req, res) => {
-  const id = req.params.id;
-  const edit = req.body;
-  return ResList.findById(id)
-    .then((restaurant) => {
-      restaurant.name = edit.name;
-      restaurant.name_en = edit.name_en;
-      restaurant.phone = edit.phone;
-      restaurant.location = edit.location;
-      restaurant.category = edit.category;
-      restaurant.image = edit.image;
-      restaurant.rating = edit.rating;
-      restaurant.description = edit.description;
-      return restaurant.save();
-    })
-    .then(() => res.redirect(`/restaurants/${id}`))
-    .catch((error) => console.log(error));
-});
-
-// delete
-app.post("/restaurants/:id/delete", (req, res) => {
-  const id = req.params.id;
-  return ResList.findById(id)
-    .then((restaurant) => restaurant.remove())
-    .then(() => res.redirect("/"))
-    .catch((error) => console.log(error));
-});
 
 app.listen(port, () => {
   console.log(`app is ruuning on http://localhost:${port}`);
