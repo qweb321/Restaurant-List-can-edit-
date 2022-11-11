@@ -52,9 +52,9 @@ app.get('/search', (req, res) => {
       })
 
       if(!searchList.length) {
-        return res.render('cannot_found', { keyword })
+        return res.render("cannot_found", { keyword })
       }
-      res.render('index', { restList: searchList, keyword})
+      res.render("index", { restList: searchList, keyword})
     })
     .catch(error => console.log(error))
 })
@@ -64,21 +64,10 @@ app.get("/restaurants/new", (req, res) => {
 });
 
 app.post("/restaurants", (req, res) => {
-  const name = req.body.name;
-  const name_en = req.body.name_en;
-  const phone = req.body.phone;
-  const category = req.body.category;
-  const location = req.body.location;
-  const description = req.body.description;
-  console.log(req.body);
-  return ResList.create({
-    name,
-    name_en,
-    phone,
-    category,
-    location,
-    description,
-  });
+  const new_data = req.body
+  return ResList.create({...new_data})
+    .then(() => res.redirect("/"))
+    .catch(error => console.log(error))
 });
 // detail
 app.get("/restaurants/:id", (req, res) => {
