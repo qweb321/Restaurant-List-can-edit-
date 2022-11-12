@@ -1,9 +1,10 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override")
 
 const router = require("./routes")
-require('./config/mongoose')
+require("./config/mongoose")
 
 const port = 3000;
 const app = express();
@@ -15,6 +16,7 @@ app.set("view engine", "hbs");
 // 宣告express使用靜態css文件
 app.use(express.static("./public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'))
 
 app.use(router)
 
