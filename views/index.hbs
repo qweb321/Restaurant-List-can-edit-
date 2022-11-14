@@ -24,9 +24,24 @@
     </div>
   </div>
 </div>
+{{!-- sort selection --}}
+<div class="sort-container">
+    <form action="/" method="GET">
+      <select name="sort" id="sort" class="form-select" onchange="this.form.submit()">
+        <option value="">sort</option>
+        <option value="A-Z" {{#if sort.A-Z}} selected {{/if}}>A->Z</option>
+        <option value="Z-A" {{#if sort.Z-A}} selected {{/if}}>Z->A</option>
+        <option value="category" {{#if sort.category}} selected {{/if}}>類別</option>
+        <option value="location"  {{#if sort.location}} selected {{/if}}>地區</option>
+        <option value="rating"  {{#if sort.rating}} selected {{/if}}>評分</option>
+
+      </select>
+    </form>
+</div>
 
 <!-- restaurant list -->
 <div class="container mt-5">
+  </div>
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
       <div class="row row-cols-sm-3">
