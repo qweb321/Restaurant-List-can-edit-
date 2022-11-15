@@ -3,7 +3,6 @@ const router = express.Router()
 const ResList = require('../../model/res-list')
 
 router.get("/", (req, res) => {
-    console.log(req.query.sort)
     const sortValue = req.query.sort
     const sortOption = {
       'A-Z': {name: 'asc'},
@@ -13,7 +12,7 @@ router.get("/", (req, res) => {
       'rating': {rating: 'desc'}
     }
     const sort = sortValue ? { [sortValue]:true } : {}
-    console.log(sort)
+
     ResList.find()
       .lean()
       .sort(sortOption[sortValue])

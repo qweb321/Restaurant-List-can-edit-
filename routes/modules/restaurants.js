@@ -7,8 +7,7 @@ router.get("/new", (req, res) => {
   });
   
 router.post("/", (req, res) => {
-    const new_data = req.body
-    return ResList.create({...new_data})
+    return ResList.insertMany(req.body)
       .then(() => res.redirect("/"))
       .catch(error => console.log(error))
 });
@@ -35,14 +34,8 @@ router.put("/:id", (req, res) => {
     const edit = req.body;
     return ResList.findById(id)
       .then((restaurant) => {
-        restaurant.name = edit.name;
-        restaurant.name_en = edit.name_en;
-        restaurant.phone = edit.phone;
-        restaurant.location = edit.location;
-        restaurant.category = edit.category;
-        restaurant.image = edit.image;
-        restaurant.rating = edit.rating;
-        restaurant.description = edit.description;
+        // use Object.assign
+        restaurant = Object.assign(restaurant, edit)
         return restaurant.save();
       })
       .then(() => res.redirect(`/restaurants/${id}`))
