@@ -2,16 +2,18 @@ header {
   overflow: hidden;
 }
 
-.navbar .navbar-brand, .nav-link{
+.navbar .navbar-brand,
+.nav-link {
   color: #4592af;
 }
 
-.navbar .navbar-brand, .nav-link:hover {
+.navbar .navbar-brand,
+.nav-link:hover {
   color: #226089;
 }
 
 .link-icon {
-  color:#666666
+  color: #666666;
 }
 
 .banner {
@@ -40,9 +42,17 @@ header {
   color: #9b4b4b;
 }
 
+.input-group .form-control {
+  flex: 2 1 auto;
+}
+
 .form-control::placeholder {
   color: #aaaaaa;
   font-size: 0.8rem;
+}
+
+.input-group .form-select {
+  flex: 1 1 auto;
 }
 
 .btn-major {
@@ -78,7 +88,6 @@ header {
   display: flex;
   justify-content: end;
 }
-
 
 @media screen and (max-width: 768px) {
   .restaurant-show-title {

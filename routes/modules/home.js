@@ -1,44 +1,32 @@
-const express = require('express')
-const router = express.Router()
-const ResList = require('../../model/res-list')
+const express = require("express");
+const router = express.Router();
+const ResList = require("../../model/res-list");
 
 router.get("/", (req, res) => {
-    const sortValue = req.query.sort
-    const sortOption = {
-      'A-Z': {name: 'asc'},
-      'Z-A': {name: 'desc'},
-      'catergory': {catergory: 'asc'},
-      'location': {location: 'asc'},
-      'rating': {rating: 'desc'}
-    }
-    const sort = sortValue ? { [sortValue]:true } : {}
-
-    ResList.find()
-      .lean()
-      .sort(sortOption[sortValue])
-      .collation( {locale: 'zh_Hant'} )
-      .then((restList) => {
-        res.render("index", { restList, sort})
-      })
-      .catch((error) => console.log(error));
-  });
-
-router.get('/search', (req, res) => {
-    const keyword = req.query.keyword.trim().toLowerCase()
-    ResList.find()
-      .lean()
-      .then((restList) => {
-        const searchList = restList.filter((rest) => { 
-          return rest.name.toLowerCase().includes(keyword) || 
-            rest.name_en.toLowerCase().includes(keyword) ||
-            rest.category.toLowerCase().includes(keyword)
-        })
-  
-        if(!searchList.length) {
-          return res.render("cannot_found", { keyword })
-        }
-        res.render("index", { restList: searchList, keyword})
-      })
-      .catch(error => console.log(error))
-  }) 
-  module.exports = router
+  const sortValue = req.query.sort;
+  const sort = sortValue ? { [sortValue]: true } : {};
+  const sortOption = {
+    "A-Z": { name: "asc" },
+    "Z-A": { name: "desc" },
+    catergory: { catergory: "asc" },
+    location: { location: "asc" },
+    rating: { rating: "desc" },
+  };
+  const keyword = req.query.keyword ? req.query.keyword : "";
+  console.log(keyword);
+  ResList.find({
+    $or: [
+      { name: { $regex: keyword, $options: "$i" } }, // mongodb query selector
+      { name_en: { $regex: keyword, $options: "$i" } },
+      { category: { $regex: keyword, $options: "$i" } },
+    ],
+  })
+    .sort(sortOption[sortValue]) // Combine search and sort in the same form that can prevent page transferred when submitted
+    .lean()
+    .then((restList) => {
+      // console.log(restList)
+      res.render("index", { restList, sort, keyword });
+    })
+    .catch((error) => console.log(error));
+});
+module.exports = router;
