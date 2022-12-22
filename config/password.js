@@ -11,23 +11,30 @@ module.exports = (app) => {
 
   //register strategy
   passport.use(
-    new LocalStrategy({ usernameField: "email" }, function verify(
-      email,
-      password,
-      done
-    ) {
-      User.findOne({ email })
-        .then((user) => {
-          if (!user) {
-            return done(null, false, { message: "Email is not registered." });
-          }
-          if (user.password !== password) {
-            return done(null, false, { message: "Password is not correct." });
-          }
-          return done(null, user);
-        })
-        .catch((err) => done(err, null));
-    })
+    new LocalStrategy(
+      { usernameField: "email", passReqToCallback: true },
+      function verify(req, email, password, done) {
+        User.findOne({ email })
+          .then((user) => {
+            if (!user) {
+              return done(
+                null,
+                false,
+                req.flash("warning_msg", "Email is not registered.")
+              );
+            }
+            if (user.password !== password) {
+              return done(
+                null,
+                false,
+                req.flash("warning_msg", "Email or Password is not correct.")
+              );
+            }
+            return done(null, user);
+          })
+          .catch((err) => done(err, null));
+      }
+    )
   );
 
   passport.serializeUser(function (user, done) {

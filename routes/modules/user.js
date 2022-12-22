@@ -22,6 +22,7 @@ router.get("/register", (req, res) => {
 router.post("/register", (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
   if (password !== confirmPassword) {
+    req.flash("warning_msg", "Password and Confirm Password is different");
     return res.render("register", {
       name,
       email,
@@ -58,6 +59,7 @@ router.get("/logout", (req, res) => {
     if (err) {
       console.log(err);
     }
+    req.flash("success_msg", "Logout successfully!");
     res.redirect("/users/login");
   });
 });
