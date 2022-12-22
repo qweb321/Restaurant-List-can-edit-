@@ -1,0 +1,30 @@
+<div class="row login-outer">
+  <div class="col-md-5 m-auto">
+    <div class="card card-body">
+      <h2 class="login text-center">Login</h2>
+      <form action="/users/login" method="POST">
+        <div class="mb-3">
+          <label for="email" class="login form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter email address"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="login form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+          />
+        </div>
+        <button type="submit" class="btn btn-major">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
