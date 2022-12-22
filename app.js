@@ -3,7 +3,7 @@ const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const session = require("express-session");
-
+const usePassport = require("./config/password");
 const router = require("./routes");
 require("./config/mongoose");
 
@@ -26,8 +26,9 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
+usePassport(app);
 app.use(router);
 
 app.listen(port, () => {
-  console.log(`app is ruuning on http://localhost:${port}`);
+  console.log(`app is ruuning on http://localhost:${port}/user/login`);
 });
