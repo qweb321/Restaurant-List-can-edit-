@@ -27,6 +27,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 usePassport(app);
+
+app.use((req, res, next) => {
+  // 把req的資料回傳給res
+  res.locals.isAuthenticated = req.isAuthenticated;
+  res.locals.user = req.user;
+  next();
+});
+
 app.use(router);
 
 app.listen(port, () => {
