@@ -13,12 +13,19 @@ router.get("/", (req, res) => {
     rating: { rating: "desc" },
   };
   const keyword = req.query.keyword ? req.query.keyword : "";
-  console.log(keyword);
+
+  const userId = req.user._id;
+
   ResList.find({
-    $or: [
-      { name: { $regex: keyword, $options: "$i" } }, // mongodb query selector
-      { name_en: { $regex: keyword, $options: "$i" } },
-      { category: { $regex: keyword, $options: "$i" } },
+    $and: [
+      { userId },
+      {
+        $or: [
+          { name: { $regex: keyword, $options: "$i" } }, // mongodb query selector
+          { name_en: { $regex: keyword, $options: "$i" } },
+          { category: { $regex: keyword, $options: "$i" } },
+        ],
+      },
     ],
   })
     .sort(sortOption[sortValue]) // Combine search and sort in the same form that can prevent page transferred when submitted

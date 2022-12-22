@@ -35,6 +35,12 @@ const ResListSchema = new Schema({
   description: {
     type: String,
   },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    index: true,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("ResList", ResListSchema);
