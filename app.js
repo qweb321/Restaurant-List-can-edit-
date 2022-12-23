@@ -6,7 +6,12 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const usePassport = require("./config/password");
 const router = require("./routes");
+
 require("./config/mongoose");
+
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 const port = 3000;
 const app = express();
@@ -16,7 +21,6 @@ app.set("view engine", "hbs");
 
 // 宣告express使用靜態css文件
 app.use(express.static("./public"));
-
 app.use(
   session({
     secret: "Thisismykey",
