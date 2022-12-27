@@ -13,6 +13,7 @@ This project provide user can search restaurant list by name or category, add ne
 
 Users should be able to:
 
+- Create your own account or create by Facebook
 - View the restaurant users like
 - Search restaurant details, like category, phone number, address and rate
 - Search by restaurant name or category
@@ -29,7 +30,9 @@ git clone https://github.com/qweb321/Restaurant-List-can-edit-.git
 ```
 
 2. In local side, run npm install
-3. After installation finished, create an `.env` file and insert the code
+3. After installation finished, create an `.env` file to past all code from `.env.example` file
+
+Change your own account and password
 
 ```
 MONGODB_URI =
@@ -39,7 +42,7 @@ MONGODB_URI =
 4. Run code to create database
 
 ```
-node model/seeds/res-listSeeder.js
+npm run seed
 ```
 
 5. After creating database done, run
@@ -60,6 +63,19 @@ app is listening in http://localhost:3000
 ctrl + C
 ```
 
+8. Test Account
+
+```
+Account 1
+email: user1@example.com
+password: 12345678
+
+Account 2
+email: user2@example.com
+password: 12345678
+
+```
+
 ## Built with
 
 - Node.js
@@ -69,6 +85,7 @@ ctrl + C
 - Body-parser
 - Dotenv
 - Mongoose
+- Passport
 - Bootstrap
 
 ## Author
