@@ -5,6 +5,7 @@ This project provide user can search restaurant list by name or category, add ne
 ## Table of contents
 
 - [Overview](#Overview)
+- [Screenshot](#Screenshot)
 - [Installation](#Installation)
 - [Built with](#built-with)
 - [Author](#author)
@@ -20,6 +21,9 @@ Users should be able to:
 - Add new restaurant users like
 - Edit or delete restaurant
 - Sort restaurant list to quickly find the one you want
+
+## Screenshot
+![Screenshot](images/screenshot.png)
 
 ## Installation
 
