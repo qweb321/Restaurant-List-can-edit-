@@ -23,11 +23,9 @@ Users should be able to:
 - Sort restaurant list to quickly find the one you want
 
 ## Screenshot
-<<<<<<< HEAD
+
 ![Screenshot](public/image/screenshot.png)
-=======
-![Screenshot](images/screenshot.png)
->>>>>>> 3afb35c688f04725abf696401af07cf6f303a8b7
+
 
 ## Installation
 
